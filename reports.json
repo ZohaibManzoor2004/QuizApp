@@ -1,0 +1,96 @@
+[
+  {
+    "username": "AliKhan",
+    "answers": {
+      "0": "Berlin",
+      "1": "JavaScript",
+      "2": "HyperText Markup Language",
+      "3": "Mars",
+      "4": "Galileo Galilei",
+      "5": "Vue",
+      "6": "1939",
+      "7": "Tree",
+      "8": "<script>",
+      "9": "Google Cloud",
+      "10": "12",
+      "11": "7",
+      "12": "7",
+      "13": "China",
+      "14": "Bahadur Shah Zafar",
+      "15": "Grozhny"
+    },
+    "date": "2025-11-14T11:01:36.276Z"
+  },
+  {
+    "username": "Akbar",
+    "answers": {
+      "0": "Berlin",
+      "1": "JavaScript",
+      "2": "HyperText Markup Language",
+      "3": "Mars",
+      "4": "Galileo Galilei",
+      "5": "Vue",
+      "6": "1939",
+      "7": "Tree",
+      "8": "<script>",
+      "9": "Google Cloud",
+      "10": "12",
+      "11": "7",
+      "12": "7",
+      "13": "China",
+      "14": "Bahadur Shah Zafar",
+      "15": "Grozhny"
+    },
+    "date": "2025-11-14T11:01:57.611Z"
+  },
+  {
+    "username": "zebi",
+    "answers": {
+      "0": "Berlin",
+      "1": "Python",
+      "2": "HighText Machine Language",
+      "3": "Mars",
+      "4": "Galileo Galilei",
+      "5": "Django",
+      "6": "1945",
+      "7": "Tree",
+      "8": "<script>",
+      "9": "AWS",
+      "10": "12",
+      "11": "4",
+      "12": "7",
+      "13": "Canada",
+      "14": "Bahadur Shah Zafar",
+      "15": "Grozhny",
+      "16": "2",
+      "17": "8"
+    },
+    "date": "2025-11-15T11:56:12.811Z"
+  },
+  {
+    "username": "zebi",
+    "answers": {
+      "0": "Berlin",
+      "1": "JavaScript",
+      "2": "HyperText Markup Language",
+      "3": "Earth",
+      "4": "Albert Einstein",
+      "5": "Django",
+      "6": "1939",
+      "7": "Queue",
+      "8": "<script>",
+      "9": "Azure",
+      "10": "15",
+      "11": "5",
+      "12": "8",
+      "13": "Taimur Lang",
+      "14": "Grozhny",
+      "15": "2",
+      "16": "7",
+      "17": "14",
+      "18": "Jeff Bezos",
+      "19": "7"
+    },
+    "date": "2025-11-18T20:03:57.305Z"
+  }
+]

@@ -1,0 +1,42 @@
+ [
+    {
+      "username": "testuser",
+      "password": "securepassword123"
+    },
+    {
+      "username": "admin",
+      "password": "adminpassword"
+    },
+    {
+        "username":"Sufyan",
+        "password":"sufyan"
+    },
+    {
+        "username":"zebi",
+        "password":"zebi12"
+    },
+    {
+        "username":"Admin12",
+        "password":"Admin12"
+    },
+    {
+        "username":"ali",
+        "password":"ali12"
+    },
+    {
+        "username":"khan",
+        "password":"khan12"
+    },
+    {
+        "username":"zohaib",
+        "password":"zohaib12"
+    },
+    {
+        "username":"sufyan",
+        "password":"sufyan12"
+    },
+    {
+        "username":"ali",
+        "password":"ali12"
+    }
+  ]
