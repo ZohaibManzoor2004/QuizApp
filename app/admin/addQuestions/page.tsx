@@ -32,7 +32,6 @@ export default function page({ }: Props) {
         }
 
         var ExistingQuest = await QuestionsData();
-
         console.log("Questions Data read from addQuestions route : ", ExistingQuest);
         console.log("The length of the existing questions array is :", ExistingQuest.length)
 
