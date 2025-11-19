@@ -1,18 +1,5 @@
 [
   {
-    "id": 1,
-    "question": "What is the capital city of Germany?",
-    "options": [
-      "Paris",
-      "Berlin",
-      "Madrid",
-      " Moscow"
-    ],
-    "correctAnswers": [
-      "Berlin"
-    ]
-  },
-  {
     "id": 2,
     "question": "Which programming language is primarily used for web development?",
     "options": [
@@ -246,7 +233,8 @@
       "6",
       "7",
       "8",
-      "9"
+      "9 ",
+      "10"
     ],
     "correctAnswers": [
       "8"

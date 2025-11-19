@@ -6,123 +6,89 @@ import { QuestionsData } from './Questions';
 import { saveReport } from './Submit';
 
 export default function Quiz() {
+  const router = useRouter();
+  const username = useUserStore((state) => state.username);
 
-    const username = useUserStore((state) => state.username);
-    const router = useRouter();
+  useEffect(() => {
+    if (!username) router.replace('/login');
+  }, [username]);
 
-    const [userAnswers, setUserAnswers] = useState<{ [key: number]: string }>({});
-    const [questions, setQuestions] = useState<any[]>([]);
-    const [viewQues, setViewQues] = useState(false);
-    const [currentIndex, setCurrentIndex] = useState(0);
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [currentQ, setCurrentQ] = useState(0); // show 1 question at a time
+  const [userAnswers, setUserAnswers] = useState<{ [key: number]: string }>({});
+  const [started, setStarted] = useState(false);
 
-    // Redirect if not logged in
-    useEffect(() => {
-        if (!username) {
-            router.replace('./login');
-        }
-    }, [username, router]);
+  const handleStart = async () => {
+    const data = await QuestionsData();
+    setQuestions(data);
+    setStarted(true);
+  };
 
-    // Start Quiz
-    const handleClick = async () => {
-        const QuestionData = await QuestionsData();
-        setQuestions(QuestionData);
-        setViewQues(true);
-        console.log("Loaded question data: ", QuestionData);
-    };
+  const handleNext = () => {
+    if (currentQ < questions.length - 1) {
+      setCurrentQ(currentQ + 1);
+    }
+  };
 
-    // Submit Quiz
-    const handleSubmitQuiz = async () => {
-        await saveReport({ username, answers: userAnswers, date: new Date() });
-        alert("Quiz submitted!");
-        router.replace('./report');
-    };
+  const handleSubmitQuiz = async () => {
+    await saveReport({ username, answers: userAnswers, date: new Date() });
+    alert("Quiz submitted!");
+    router.replace("/report");
+  };
 
-    return (
-        <div className="min-h-screen bg-gray-50 p-8">
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-                
-                <div className="text-2xl font-bold text-gray-800 mb-4">
-                    This is Quiz Page
-                </div>
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
 
-                <h1 className="text-lg text-gray-600">
-                    The Username is: 
-                    <span className="font-semibold text-blue-600">
-                        {username || "Not logged in"}
-                    </span>
-                </h1>
+        <h1 className="text-2xl font-bold mb-4">Quiz Page</h1>
+        <h2 className="text-gray-700 mb-4">Username: {username}</h2>
 
-                {!viewQues && (
-                    <button 
-                        onClick={handleClick}
-                        className="border-2 px-4 py-2 mt-4"
-                    >
-                        Click to start Quiz
-                    </button>
-                )}
+        {!started && (
+          <button onClick={handleStart} className="border-2 px-4 py-2">
+            Start Quiz
+          </button>
+        )}
 
-                {/* Show only ONE question at a time */}
-                {viewQues && questions.length > 0 && (
-                    <div className="mt-6 space-y-4">
+        {started && questions.length > 0 && (
+          <div>
+            {/* Show only 1 question */}
+            <h2 className="text-xl font-bold">
+              Question {currentQ + 1}/{questions.length}
+            </h2>
+            <p className="mt-2">{questions[currentQ].question}</p>
 
-                        {/* Current Question */}
-                        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold">
-                                Question {currentIndex + 1} of {questions.length}:
-                            </h2>
+            {questions[currentQ].options.map((option: string, idx: number) => (
+              <label key={idx} className="block mt-2">
+                <input
+                  type={questions[currentQ].correctAnswers.length > 1 ? "checkbox" : "radio"}
+                  name={`q-${currentQ}`}
+                  value={option}
+                  checked={userAnswers[currentQ] === option}
+                  onChange={(e) =>
+                    setUserAnswers(prev => ({
+                      ...prev,
+                      [currentQ]: e.target.value
+                    }))
+                  }
+                />
+                <span className="ml-2">{option}</span>
+              </label>
+            ))}
 
-                            <p className="mt-2">{questions[currentIndex].question}</p>
-
-                            {questions[currentIndex].options.map((option: string, idx: number) => {
-                                const opType =
-                                    questions[currentIndex].correctAnswers.length > 1
-                                        ? "checkbox"
-                                        : "radio";
-
-                                return (
-                                    <label key={idx} className="block mt-2">
-                                        <input
-                                            type={opType}
-                                            name={`question-${currentIndex}`}
-                                            value={option}
-                                            checked={userAnswers[currentIndex] === option}
-                                            onChange={(e) =>
-                                                setUserAnswers(prev => ({
-                                                    ...prev,
-                                                    [currentIndex]: e.target.value
-                                                }))
-                                            }
-                                            className="mr-2"
-                                        />
-                                        {option}
-                                    </label>
-                                );
-                            })}
-                        </div>
-
-                        {/* NEXT button (not on last question) */}
-                        {currentIndex < questions.length - 1 && (
-                            <button
-                                className="border px-4 py-2"
-                                onClick={() => setCurrentIndex(currentIndex + 1)}
-                            >
-                                Next
-                            </button>
-                        )}
-
-                        {/* SUBMIT button (only last question) */}
-                        {currentIndex === questions.length - 1 && (
-                            <button
-                                className="border px-4 py-2"
-                                onClick={handleSubmitQuiz}
-                            >
-                                Submit Quiz
-                            </button>
-                        )}
-                    </div>
-                )}
-
+            <div className="mt-4">
+              {currentQ < questions.length - 1 ? (
+                <button className="border-2 px-4 py-2" onClick={handleNext}>
+                  Next
+                </button>
+              ) : (
+                <button className="border-2 px-4 py-2" onClick={handleSubmitQuiz}>
+                  Submit Quiz
+                </button>
+              )}
             </div>
-        </div>
-    );
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
