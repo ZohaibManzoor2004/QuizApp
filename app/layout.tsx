@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import tailwind from '@tailwindcss/postcss'
+// import {ClientInit} from "@/components/ClientInit";
+// import { ClientInit } from '../components/ClientInit';
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,13 +10,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-      >
+      <body>
+        {/* <ClientInit />   🔥 100% client-run guaranteed */}
         {children}
       </body>
     </html>

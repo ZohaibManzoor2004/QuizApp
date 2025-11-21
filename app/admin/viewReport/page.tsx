@@ -3,14 +3,20 @@ import { ReportRead } from '../ReportReader';
 import Link from 'next/link';
 import {QuestionsRead} from '../ReportReader';
 import { Score } from '../ReportReader';
+// import {useQuestionStore} from '../../QuestionStoreHelper';
+
 type Props = {}
 
 export default async function page({}: Props) {
+    // const questions = useQuestionStore(state => state.questions);
+
+
     let reports =  await ReportRead()
-    let questions = await QuestionsRead(); 
+    let questions1 = await QuestionsRead(); 
+    // setQuestions(questions1);
     let ScoreData = await Score();
     console.log("Reports Data : ",reports);
-    console.log("Questions Data : ",questions);
+    // console.log("Questions Data : ",questions);
     console.log("Score Data : ",ScoreData);
 
     return (
@@ -21,9 +27,9 @@ export default async function page({}: Props) {
         <ul className="space-y-2">
             {ScoreData.map((ScoreRecord: any, idx: number) => (
                 <li key={idx} className="border-b py-3">
-                        Candidate Name: {ScoreRecord.username} : Score : {ScoreRecord.percentageScore}
+                    
+                        Candidate Name: {ScoreRecord.username} : Score : {ScoreRecord.percentageScore} % 
                 </li>
-
             ))}
         </ul>
     </div>

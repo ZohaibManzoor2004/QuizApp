@@ -2,6 +2,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { json } from 'stream/consumers';
+// import {useQuizStore} from './QuestionStoreHelper';
 // import { useUserStore } from '../login/userStore';
 
 const reportFilePath = path.join(process.cwd(), 'reports.json');
@@ -35,6 +36,7 @@ export async function Score() {
         let username =report.username;
         Object.keys(report.answers).forEach((key) => {
             let userAnswer = report.answers[key];
+            console.log("The console above the previous error line : ")
             let correctAnswer = QuestionsData[Number(key)].correctAnswers;
 
             if (correctAnswer.includes(userAnswer)) {

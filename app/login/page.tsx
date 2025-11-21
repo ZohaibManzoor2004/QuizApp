@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
-import { useUserStore } from "./userStore";
+import { useUserStore } from "../../components/stores/userStore";
 
 import { authenticateUser } from './AuthHelper';
 import { registerUser } from './AuthHelper';

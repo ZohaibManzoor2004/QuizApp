@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useUserStore } from "../login/userStore";
+import { useUserStore } from "../../components/stores/userStore";
 import { useRouter } from "next/navigation";
 import { QuestionsData } from './Questions';
 import { saveReport } from './Submit';
@@ -63,6 +63,7 @@ export default function Quiz() {
                   type={questions[currentQ].correctAnswers.length > 1 ? "checkbox" : "radio"}
                   name={`q-${currentQ}`}
                   value={option}
+                  required={true}
                   checked={userAnswers[currentQ] === option}
                   onChange={(e) =>
                     setUserAnswers(prev => ({
