@@ -1,28 +1,64 @@
+//----------------------//
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
+import { questions } from './lib/db/schemas/questionschema'
+import { users } from "./lib/db/schemas/userschema";
+import { reports } from './lib/db/schemas/reportschema';
 
-import { users } from "./lib/db/userschema";
+//import Data from './data.json';
+import QuestionsData from './questions.json';
+import ReportsData from './reports.json'
 
+// console.log("THe Questions Data imported is : ",QuestionsData);
+console.log("THe Reports Data imported is : ", ReportsData);
 
 // 1: Create neon connection
 const sql = neon(process.env.DATABASE_URL!);
 
 // 2: Initialize drizzle with schema
-const db = drizzle(sql, { schema: { users } });
+export const userTable = drizzle(sql, { schema: { users } });
+export const questionTable = drizzle(sql, { schema: { questions } })
+export const ReportsTable = drizzle(sql, { schema: { reports } })
 
 async function main() {
-  const user = {
-    username: "Ali",
-    password: "test123",
-  };
-
+  // const user = {
+  //   username: "Shahid",
+  //   password: "shahid12",
+  // };
+  // const formattedQuestions = QuestionsData.map((q) => ({
+  //   id: q.id,
+  //   question: q.question,
+  //   options: JSON.stringify(q.options),          // array → JSON string
+  //   correctAnswers: JSON.stringify(q.correctAnswers) // array → JSON string
+  // }));
   // INSERT CORRECTLY
-  await db.insert(users).values(user);
+  // console.log("Data stroing start")
+  // let allUsers = await questionTable.insert(questions).values(QuestionsData);
+  // console.log("Data stroing End")
 
+  // const formattedReports = ReportsData.map((r) => ({
+  //     date: new Date(r.date), // ← convert string → Date
+  //     answers: JSON.stringify(r.answers), // object → JSON string
+  //   }));
+  const usersInDb = await userTable.select().from(users);
+
+  const formattedReports = ReportsData.map((r) => {
+    const user = usersInDb.find(u => u.username === r.username);
+    return {
+      userId: user?.id,                 // <-- required
+      answers: JSON.stringify(r.answers),
+      date: new Date(r.date),
+    };
+  });
+
+  console.log("Insert Data stroing start")
+  let allReports = await ReportsTable.insert(reports).values(formattedReports);
+  console.log("insert Data stroing End")
+  // const usersInDb = await userTable.select().from(users);
   // FETCH CORRECTLY
-  const allUsers = await db.select().from(users);
-  console.log("Users in DB:", allUsers);
+  //const allUsers = await userTable.select().from(users);
+  //console.log("Users in DB:", allUsers);
 }
 
 main();

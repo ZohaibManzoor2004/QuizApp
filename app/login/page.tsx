@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
 import { useUserStore } from "../../components/stores/userStore";
 
-import { authenticateUser } from './AuthHelper';
+// import { authenticateUser } from './AuthHelper';
+//Chnaged for DB
+import { authenticateUserDB } from './AuthHelper';
+
 import { registerUser } from './AuthHelper';
 type Props = {}
 
@@ -26,14 +29,15 @@ export default function Login({ }: Props) {
         console.log("Register mode enabled");
     };
 
-
     const handleLogin = async (e: React.FormEvent) => {
         console.log("Clicked on Login")
         e.preventDefault();
-        let response = await authenticateUser(username, password);
+        //changed for DB
+        let response = await authenticateUserDB(username, password);
         console.log("response from handleSubmit is : ", response);
         if (response.status !== "success") {
-            response = { status: "error", message: "Fallback", username: username };
+            response = { status: "error", message:"Invalid username or password" , username: username };
+            setAuthMessage(response.message);
         }
         console.log("The response is : ", response);
         if (response.status === "success") {
@@ -48,18 +52,26 @@ export default function Login({ }: Props) {
             }
             else {
                 router.push("/quiz");
-            }             //console.log("The username from userStore is : ",  await useUserStore((state)=>state.username))
+            } //console.log("The username from userStore is : ",  await useUserStore((state)=>state.username))
         }
     }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (endpoint === "Register") {
-            await registerUser(username, password);
-            router.push("/quiz");
-            return ;
-        }
 
+            const regRes = await registerUser(username, password);
+            console.log(" The response of the Register User is : ",regRes)
+            if (regRes.status === 'success') {
+                router.push("/quiz");
+            }
+            if (regRes.status === 'preExisting'){
+                setAuthMessage(regRes.message);
+                console.log("User with Provided Username Already exists ");
+            }
+
+            return;
+        }
         await handleLogin(e);
     };
 
@@ -92,7 +104,7 @@ export default function Login({ }: Props) {
                     {/* Input field - Username */}
                     <input
                         type="text"
-                        placeholder="Enter your username" 
+                        placeholder="Enter your username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         // Input styling: Full width, padding, border, focus ring, margin bottom
@@ -121,21 +133,21 @@ export default function Login({ }: Props) {
                         </button>
                     </div>
                 </form>
-                
+
                 {/* Authentication Message */}
-                <h2 className={`text-center mt-4 font-medium ${authMessage === "Logged In" ? 'text-green-600' : 'text-red-500'}`}> 
+                <h2 className={`text-center mt-4 font-medium ${authMessage === "Logged In" ? 'text-green-600' : 'text-red-500'}`}>
                     Authentication: {authMessage}
                 </h2>
 
                 {/* Register Toggle Button */}
                 <div className="mt-6 border-t pt-4 text-center">
                     {endpoint === "Register" ? (
-                        <button onClick={() => { setPageName("Login Page"); setEndPoint(""); }} 
+                        <button onClick={() => { setPageName("Login Page"); setEndPoint(""); }}
                             className="text-sm text-indigo-500 hover:text-indigo-700 transition duration-150 underline" >
                             Already have an account? Go to Login
                         </button>
                     ) : (
-                        <button onClick={handleRegister} 
+                        <button onClick={handleRegister}
                             className="text-sm text-indigo-500 hover:text-indigo-700 transition duration-150 underline">
                             Don't have an account? Click Here to Register
                         </button>

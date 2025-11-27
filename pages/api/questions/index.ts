@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "@/lib/db";
-import { questions } from "@/lib/schema/questions";
+import { questions } from "@/lib/db/schemas/questionschema";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

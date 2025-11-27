@@ -8,13 +8,18 @@ import { json } from 'stream/consumers';
 const reportFilePath = path.join(process.cwd(), 'reports.json');
 const QuestionsFilePath = path.join(process.cwd(), 'questions.json');
 
-
+// For json
 export async function ReportRead() {
     const reportsData = await fs.readFile(reportFilePath, 'utf-8');
     const AllReports = JSON.parse(reportsData);
     console.log("ParsedData form ReportRead inside function: ", AllReports);
     return AllReports;
 }
+
+
+
+
+
 
 export async function QuestionsRead() {
     const QuestionsData = await fs.readFile(QuestionsFilePath, 'utf-8');
@@ -60,20 +65,6 @@ export async function Score() {
     return Scores ;
 }
 
-// for (let report of reportsData) {
-// let score = 0;
-// Object.keys(report.answers).forEach((key:any) => {
-//     QuestionsData[key].correctAnswers.includes(key)
-// });
-
-// for (let answers of report.answers) {
-//     let userAnswer = report.answers[key];
-//     let correctAnswer = QuestionsData.correctAnswers[key];
-
-//     if (userAnswer === correctAnswer) {
-//         score++;
-//     }
-// }
 
 
 
