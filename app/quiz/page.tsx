@@ -21,6 +21,7 @@ export default function Quiz() {
   const handleStart = async () => {
     const data = await QuestionsData();
     setQuestions(data);
+    console.log(" Data recieved at handle start : ",data);
     setStarted(true);
   };
 

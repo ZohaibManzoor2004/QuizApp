@@ -1,12 +1,12 @@
 //----------------------//
 'use server'
 import "dotenv/config";
-import { drizzle } from "drizzle-orm/neon-http";
+// import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
-import { questions } from '../../lib/db/schemas/questionschema'
+// import { questions } from '../../lib/db/schemas/questionschema'
 import { users } from "../../lib/db/schemas/userschema";
-import { reports } from '../../lib/db/schemas/reportschema';
+// import { reports } from '../../lib/db/schemas/reportschema';
 // import { db, users } from "@/lib/db";
 
 //db is the db conection with drizzle(wrap)
