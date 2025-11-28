@@ -7,10 +7,11 @@ type Props = {}
 
 export default function page({ }: Props) {
 
+
     const handleSubmit = async (event: any) => {
         //event.preventDefault();
         const formData = new FormData(event.target);
-        const question = formData.get("question");
+        const question = formData.get("question")?.toString() || "";
         var options = formData.get("options");
         alert("New Question Added : ");
         var correctAnswers = formData.get("correctAnswers");
@@ -31,16 +32,14 @@ export default function page({ }: Props) {
             console.log("correctAnswer array form form : ", correctAnswerArray);
         }
 
-        var ExistingQuest = await QuestionsData();
-        console.log("Questions Data read from addQuestions route : ", ExistingQuest);
-        console.log("The length of the existing questions array is :", ExistingQuest.length)
+        // var ExistingQuest = await QuestionsData();
+        // console.log("Questions Data read from addQuestions route : ", ExistingQuest);
+        // console.log("The length of the existing questions array is :", ExistingQuest.length)
 
-        const id = ExistingQuest.length + 1;
-        console.log("Questions Data read from addQuestions route : ", ExistingQuest);
+        // console.log("Questions Data read from addQuestions route : ", ExistingQuest);
         //console.log("The length of the existing questions array is :",ExistingQuest.length )
 
         const newQuestion = {
-            id: id,
             question: question,
             options: optionsArray,
             correctAnswers: correctAnswerArray,
@@ -49,6 +48,50 @@ export default function page({ }: Props) {
         await AddQuestion(newQuestion);
 
     }
+
+    
+    // const handleSubmit = async (event: any) => {
+    //     //event.preventDefault();
+    //     const formData = new FormData(event.target);
+    //     const question = formData.get("question");
+    //     var options = formData.get("options");
+    //     alert("New Question Added : ");
+    //     var correctAnswers = formData.get("correctAnswers");
+    //     console.log("Question from form : ", question);
+    //     console.log("Options from form : ", options);
+    //     console.log("correctAnswers from form : ", correctAnswers);
+
+    //     let optionsArray: string[] = [];
+    //     if (typeof options === 'string' && options.trim() !== '') {
+    //         // Now TypeScript knows 'options' is a string
+    //         optionsArray = options.split(',').map(option => option.trim());
+    //         console.log("Options array form form : ", optionsArray);
+    //     }
+    //     let correctAnswerArray: string[] = [];
+    //     if (typeof correctAnswers === 'string' && correctAnswers.trim() !== '') {
+    //         // Now TypeScript knows 'options' is a string
+    //         correctAnswerArray = correctAnswers.split(',').map(answer => answer.trim());
+    //         console.log("correctAnswer array form form : ", correctAnswerArray);
+    //     }
+
+    //     var ExistingQuest = await QuestionsData();
+    //     console.log("Questions Data read from addQuestions route : ", ExistingQuest);
+    //     console.log("The length of the existing questions array is :", ExistingQuest.length)
+
+    //     const id = ExistingQuest.length + 1;
+    //     console.log("Questions Data read from addQuestions route : ", ExistingQuest);
+    //     //console.log("The length of the existing questions array is :",ExistingQuest.length )
+
+    //     const newQuestion = {
+    //         id: id,
+    //         question: question,
+    //         options: optionsArray,
+    //         correctAnswers: correctAnswerArray,
+    //     }
+    //     console.log("The object data of entire add questions flow : ", newQuestion);
+    //     await AddQuestion(newQuestion);
+
+    // }
     return (
         <div className="p-6 max-w-2xl mx-auto">
             <h1 className="text-2xl font-bold mb-6"> Add Questions </h1>
