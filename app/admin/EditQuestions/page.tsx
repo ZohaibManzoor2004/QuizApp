@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { FetchQuestions, UpdateQuestions } from './EditHelper';
+import { FetchQuestions, UpdateQuestions, DeleteQue } from './EditHelper';
 
 type Question = {
   id: number;
@@ -19,14 +19,30 @@ export default function Page() {
   };
 
   // Delete a question
-  const handleDelete = (id: number) => {
-    setQuestions(prev => prev.filter(q => q.id !== id));
-  };
+  const handleDelete = async (id: number) => {
+  try {
+    const deleted = await DeleteQue(id);
+    if (deleted.length > 0) {
+      alert(`Question deleted successfully with id ${id}`);
+    } else {
+      alert(`No question found with id ${id}`);
+    }
+  } catch (err) {
+    console.error("Error deleting question:", err);
+    alert("Failed to delete the question.");
+  }
+};
+
+
+  // // Delete a question
+  // const handleDelete = (id: number) => {
+  //   setQuestions(prev => prev.filter(q => q.id !== id));
+  // };
 
   // Update all questions
   const handleUpdateAll = async () => {
     await UpdateQuestions(questions);
-    await UpdateQuestions(questions);
+    // await UpdateQuestions(questions);
     console.log('Updated questions:', questions);
     alert('All questions updated successfully!');
   };
