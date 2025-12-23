@@ -17,10 +17,6 @@ export async function ReportRead() {
 }
 
 
-
-
-
-
 export async function QuestionsRead() {
     const QuestionsData = await fs.readFile(QuestionsFilePath, 'utf-8');
     const AllQuestions = JSON.parse(QuestionsData);

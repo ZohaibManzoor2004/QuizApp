@@ -19,7 +19,6 @@
 // }
 
 
-
 //////////
 'use server';
 import { db } from "@/lib/db/index";
@@ -28,6 +27,7 @@ import { questions } from "@/lib/db/schemas/questionschema";
 export async function QuestionsData() {
   const queData = await db.select().from(questions);
   console.log("THe questions from QuestionData() : ",queData)
+  
   return queData;
 }
 

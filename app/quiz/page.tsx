@@ -27,6 +27,7 @@ export default function Quiz() {
 
   const handleNext = () => {
     if (currentQ < questions.length - 1) {
+      
       setCurrentQ(currentQ + 1);
     }
   };
