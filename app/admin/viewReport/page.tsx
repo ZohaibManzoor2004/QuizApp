@@ -1,8 +1,8 @@
 import React from 'react'
 // import { ReportRead } from '../ReportReader';
 import Link from 'next/link';
-import {QuestionsRead} from '../ReportReader';
-import { Score } from '../ReportReader';
+// import {QuestionsRead} from '../ReportReader';
+// import { Score } from '../ReportReader';
 import { reportFetcher } from './reportFetcher';
 
 type Props = {}

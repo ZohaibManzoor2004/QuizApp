@@ -1,12 +1,27 @@
-import React from 'react';
-import { ReportRead } from './ReportReader';
+
+// import React, { use } from 'react';
+import { reportFetcher } from './ReportReader';
 import Link from 'next/link';
+// import { useUserStore } from "../../components/stores/userStore";
+// import { AdminAuth } from './ReportReader';
+// import { useRouter } from 'next/navigation';
+// const router = useRouter();
 
 type Props = {}
 
 export default async function AdminPage({ }: Props) {
-    let data = await ReportRead()
-    console.log("Report read function returned data is : ", data);
+// const username = useUserStore((state) => state.username);
+// console.log("Username from admin page is : ",username);
+    // const auth = AdminAuth();
+    // if (!auth.authorized) {
+    //     router.replace('/login');
+    //     return <div className="min-h-screen flex items-center justify-center">
+    //         <h2 className="text-2xl font-semibold text-red-600">Unauthorized Access. Admins Only.</h2>
+    //     </div>
+    // }
+    
+    let nOfReports = await reportFetcher()
+    console.log("Report read function returned data is : ", nOfReports);
       return (
         <div className="min-h-screen bg-gray-50 p-6">
             <div className="max-w-4xl mx-auto">
@@ -48,11 +63,11 @@ export default async function AdminPage({ }: Props) {
                 </div>
 
                 {/* Optional: Data Summary */}
-                {data && (
+                {nOfReports && (
                     <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Reports Summary</h3>
                         <p className="text-gray-600">
-                            Total reports: {data.length}
+                            Total reports: {nOfReports}
                         </p>
                     </div>
                 )}

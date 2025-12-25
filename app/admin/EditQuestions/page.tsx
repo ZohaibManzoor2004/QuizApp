@@ -22,6 +22,9 @@ export default function Page() {
   const handleDelete = async (id: number) => {
     try {
       const deleted = await DeleteQue(id);
+      console.log("Deleted question response:", deleted);
+      console.log("ID of question to be deleted:", id);
+      setQuestions(prev => prev.filter(q => q.id !== id)); 
       if (deleted.length > 0) {
         alert(`Question deleted successfully with id ${id}`);
       } else {
@@ -32,13 +35,11 @@ export default function Page() {
       alert("Failed to delete the question.");
     }
   };
-
-
   // // Delete a question
   // const handleDelete = (id: number) => {
   //   setQuestions(prev => prev.filter(q => q.id !== id));
   // };
-
+  
   // Update all questions
   const handleUpdateAll = async () => {
     await UpdateQuestions(questions);

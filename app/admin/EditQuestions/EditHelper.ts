@@ -12,6 +12,7 @@ export async function FetchQuestions() {
 
 export async function DeleteQue(id: number) {
   const result = await db.delete(questions).where(eq(questions.id, id)).returning();
+  
   console.log(`Deleted question with id ${id}:`, result);
   return result;
 }
