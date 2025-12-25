@@ -6,23 +6,23 @@ import { questions } from "@/lib/db/schemas/questionschema";
 
 
 const QuizScore = async (answers: any) => {
-  let QuestionsData = await db.select().from(questions);  
+  let QuestionsData = await db.select().from(questions);
   console.log("The QuestionsData from function QuizScore : ", QuestionsData);
   console.log("The answers from function QuizScore : ", answers);
   let correctQuestions = 0;
   Object.keys(answers).forEach((key) => {
-      let userAnswer = answers[key];
-      console.log("The console above the previous error line : ")
-      let correctAnswer = QuestionsData[Number(key)].correctAnswers;
-      if (correctAnswer.includes(userAnswer)) {
-          correctQuestions++;
-      }
+    let userAnswer = answers[key];
+    console.log("The console above the previous error line : ")
+    let correctAnswer = QuestionsData[Number(key)].correctAnswers;
+    if (correctAnswer.includes(userAnswer)) {
+      correctQuestions++;
+    }
   });
-  console.log("The total questions in file are : ",QuestionsData.length);
+  console.log("The total questions in file are : ", QuestionsData.length);
   console.log("Final Score:", correctQuestions);
-  let percentageScore = (correctQuestions/QuestionsData.length)*100;
+  let percentageScore = (correctQuestions / QuestionsData.length) * 100;
   console.log("Score is (Percentage) :", percentageScore);
-  return percentageScore ;
+  return percentageScore;
 }
 
 export async function saveReport(data: any) {
@@ -33,11 +33,19 @@ export async function saveReport(data: any) {
   const result = await db.insert(reports).values({
     username: data.username,
     answers: JSON.stringify(data.answers),
-    score:score, 
+    score: Math.round(score),  // or Math.floor(score)
     date: new Date(),
   })
+    .returning({ id: reports.id });
+  console.log("Right Now insertion happens here : ");
+  console.log("Insert result/Reprot of Quiz inserted to DB: ", result);
+  console.log("the id returned of the reported submitted right now by drizzle ORm is : ")
   console.log("DB process Ends!");
-  return { success: true}
+  const [inserted] = result;
+  console.log("The inserted report is [inserted].id : ", inserted.id);
+  // return { success: true }
+  return { success: true, id: inserted.id }
+
 }
 
 /////Working for Saving report to the json repport.json file

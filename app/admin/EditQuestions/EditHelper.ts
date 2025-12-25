@@ -45,6 +45,7 @@ export async function UpdateQuestions(data: any[]) {
 //   const filePath = path.join(process.cwd(), "questions.json");
 
 //   let QuestionData = [];
+
 //   try {
 //     const content = await fs.readFile(filePath, "utf-8");
 //     QuestionData = JSON.parse(content);

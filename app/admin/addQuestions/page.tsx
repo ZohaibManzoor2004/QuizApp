@@ -140,12 +140,23 @@ export default function page({ }: Props) {
 
                 <button
                     type="submit"
-                    className='w-full py-3 px-4 bg-blue-600 text-white font-semibold 
+                    className='w-small py-3 px-4 bg-blue-600 text-white font-semibold 
                rounded-lg shadow-md hover:bg-blue-700 focus:outline-none 
-               focus:ring-4 focus:ring-blue-300 transition duration-300 ease-in-out'                >
+               focus:ring-4 focus:ring-blue-300 transition duration-300 ease-in-out '                >
                     Add Question
                 </button>
+                
             </form>
+            
+            <button
+                    type="submit"
+                    className='w-full py-3 px-4 bg-purple-600 text-white font-semibold 
+               rounded-lg shadow-md hover:bg-red-700 focus:outline-none 
+               focus:ring-4 focus:ring-blue-300 transition duration-600 ease-in-out mt-4'  
+                  onClick={() => window.location.href = '/admin'}
+            >
+                     {'<= .. Back To Admin Panel'}
+            </button>
         </div>
     )
 }

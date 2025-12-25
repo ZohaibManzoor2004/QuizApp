@@ -20,18 +20,18 @@ export default function Page() {
 
   // Delete a question
   const handleDelete = async (id: number) => {
-  try {
-    const deleted = await DeleteQue(id);
-    if (deleted.length > 0) {
-      alert(`Question deleted successfully with id ${id}`);
-    } else {
-      alert(`No question found with id ${id}`);
+    try {
+      const deleted = await DeleteQue(id);
+      if (deleted.length > 0) {
+        alert(`Question deleted successfully with id ${id}`);
+      } else {
+        alert(`No question found with id ${id}`);
+      }
+    } catch (err) {
+      console.error("Error deleting question:", err);
+      alert("Failed to delete the question.");
     }
-  } catch (err) {
-    console.error("Error deleting question:", err);
-    alert("Failed to delete the question.");
-  }
-};
+  };
 
 
   // // Delete a question
@@ -52,6 +52,17 @@ export default function Page() {
       <h1 className="text-xl font-bold">Edit Questions</h1>
 
       {/* Load Questions */}
+      
+      <button
+        type="submit"
+        className='w-full py-3 px-4 bg-purple-600 text-white font-semibold 
+               rounded-lg shadow-md hover:bg-red-700 focus:outline-none 
+               focus:ring-4 focus:ring-blue-300 transition duration-600 ease-in-out mt-4'
+        onClick={() => window.location.href = '/admin'}
+      >
+        {'<= .. Back To Admin Panel'}
+      </button>
+
       <button
         onClick={handleLoad}
         className="px-4 py-2 bg-blue-500 text-white rounded"

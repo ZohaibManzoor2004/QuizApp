@@ -21,21 +21,23 @@ export default function Quiz() {
   const handleStart = async () => {
     const data = await QuestionsData();
     setQuestions(data);
-    console.log(" Data recieved at handle start : ",data);
+    console.log(" Data recieved at handle start : ", data);
     setStarted(true);
   };
 
   const handleNext = () => {
     if (currentQ < questions.length - 1) {
-      
+
       setCurrentQ(currentQ + 1);
     }
   };
 
   const handleSubmitQuiz = async () => {
-    await saveReport({ username, answers: userAnswers, date: new Date() });
-    alert("Quiz submitted!");
-    router.replace("/report");
+    const result = await saveReport({ username, answers: userAnswers, date: new Date() });
+    if (result.success) {
+      alert("Quiz submitted!");
+      router.replace(`/report/${result.id}`);
+    }
   };
 
   return (
